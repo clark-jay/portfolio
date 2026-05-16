@@ -1,2 +1,2 @@
-# https://clark-jay.github.io/resume/
+# https://clark-jay.github.io/portfolio/
 This repository is for my Resume
