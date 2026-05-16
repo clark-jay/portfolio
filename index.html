@@ -1,337 +1,1135 @@
-<!DOCTYPE HTML>
-<html>
+<!DOCTYPE html>
+<html lang="en" data-theme="light" data-lang="en">
 <head>
-	<link rel="icon" type="images/png" href="images/tablet.png" />
-	<title>My Resume</title>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-	<link rel="stylesheet" href="assets/css/main.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clark Jay Cortezano — Software Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500;600&family=Fira+Code:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* ── Tokens ── */
+:root {
+  --bg:       #ffffff;
+  --bg2:      #f7f7f5;
+  --bg3:      #eeede9;
+  --ink:      #18181b;
+  --ink2:     #52525b;
+  --ink3:     #a1a1aa;
+  --accent:   #1d4ed8;
+  --accent-h: #1e40af;
+  --accent-bg:#eff6ff;
+  --red:      #dc2626;
+  --red-bg:   #fef2f2;
+  --border:   #e4e4e7;
+  --border2:  #f0f0ee;
+  --shadow:   0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+  --shadow-md:0 4px 12px rgba(0,0,0,.08);
+  --r:        8px;
+  --serif:    'Lora', Georgia, serif;
+  --sans:     'Inter', system-ui, sans-serif;
+  --mono:     'Fira Code', monospace;
+  --nav-h:    64px;
+}
+
+[data-theme="dark"] {
+  --bg:       #0f0f11;
+  --bg2:      #18181b;
+  --bg3:      #27272a;
+  --ink:      #fafafa;
+  --ink2:     #a1a1aa;
+  --ink3:     #52525b;
+  --accent:   #60a5fa;
+  --accent-h: #93c5fd;
+  --accent-bg:#1e3a5f;
+  --red:      #f87171;
+  --red-bg:   #450a0a;
+  --border:   #27272a;
+  --border2:  #1e1e21;
+  --shadow:   0 1px 3px rgba(0,0,0,.4);
+  --shadow-md:0 4px 16px rgba(0,0,0,.4);
+}
+
+/* ── Reset ── */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.6;
+  transition: background .25s, color .25s;
+  overflow-x: hidden;
+}
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+
+/* ── Controls bar (top-right) ── */
+.controls {
+  position: fixed;
+  top: 14px; right: 1.5rem;
+  z-index: 200;
+  display: flex; gap: .5rem; align-items: center;
+}
+
+.ctrl-btn {
+  height: 36px;
+  display: inline-flex; align-items: center; gap: .45rem;
+  padding: 0 .85rem;
+  font-family: var(--mono);
+  font-size: .68rem;
+  letter-spacing: .04em;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 99px;
+  color: var(--ink2);
+  cursor: pointer;
+  transition: background .2s, border-color .2s, color .2s;
+  white-space: nowrap;
+}
+
+.ctrl-btn:hover {
+  background: var(--bg3);
+  border-color: var(--ink3);
+  color: var(--ink);
+}
+
+.ctrl-btn .icon { font-size: .9rem; line-height: 1; }
+
+/* ── Nav ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  height: var(--nav-h);
+  display: flex; align-items: center; gap: 2rem;
+  padding: 0 1.5rem;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  transition: background .25s, border-color .25s;
+}
+
+.nav-logo {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  color: var(--ink);
+  flex-shrink: 0;
+}
+
+.nav-logo span { color: var(--accent); }
+
+.nav-links {
+  display: flex; gap: 1.75rem;
+  list-style: none;
+  font-size: .8rem;
+  font-weight: 500;
+}
+
+.nav-links a {
+  color: var(--ink2);
+  transition: color .15s;
+}
+
+.nav-links a:hover { color: var(--accent); }
+
+.nav-avail {
+  margin-left: auto;
+  display: flex; align-items: center; gap: .45rem;
+  font-size: .72rem;
+  font-family: var(--mono);
+  color: #16a34a;
+  padding-right: 11rem; /* room for controls */
+}
+
+.avail-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: #16a34a;
+  animation: blink 2s infinite;
+}
+
+@keyframes blink {
+  0%,100%{ opacity:1; } 50%{ opacity:.4; }
+}
+
+/* ── Page layout ── */
+.page { max-width: 960px; margin: 0 auto; padding: 0 1.5rem; }
+
+/* ── Hero ── */
+.hero {
+  padding-top: calc(var(--nav-h) + 4rem);
+  padding-bottom: 4rem;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 3rem;
+  align-items: center;
+}
+
+.hero-eyebrow {
+  font-family: var(--mono);
+  font-size: .7rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1rem;
+}
+
+.hero-name {
+  font-family: var(--serif);
+  font-size: clamp(2.8rem, 5vw, 4.2rem);
+  font-weight: 400;
+  letter-spacing: -.02em;
+  line-height: 1.05;
+  margin-bottom: .5rem;
+}
+
+.hero-name em { font-style: italic; color: var(--accent); }
+
+.hero-role {
+  font-size: 1.05rem;
+  color: var(--ink2);
+  margin-bottom: 1.5rem;
+  font-weight: 300;
+}
+
+.hero-bio {
+  font-size: .9rem;
+  color: var(--ink2);
+  line-height: 1.8;
+  max-width: 520px;
+  margin-bottom: 2rem;
+}
+
+.hero-meta {
+  display: flex; flex-wrap: wrap; gap: .5rem;
+  margin-bottom: 2rem;
+}
+
+.meta-pill {
+  font-family: var(--mono);
+  font-size: .65rem;
+  letter-spacing: .05em;
+  padding: .3rem .8rem;
+  border-radius: 99px;
+  border: 1px solid var(--border);
+  color: var(--ink2);
+  background: var(--bg2);
+}
+
+.meta-pill.jp {
+  border-color: #f59e0b;
+  color: #b45309;
+  background: #fffbeb;
+}
+
+[data-theme="dark"] .meta-pill.jp {
+  color: #fcd34d;
+  background: #1c1700;
+  border-color: #92400e;
+}
+
+.hero-ctas { display: flex; gap: .75rem; flex-wrap: wrap; }
+
+.btn {
+  display: inline-flex; align-items: center; gap: .5rem;
+  font-family: var(--sans);
+  font-size: .82rem;
+  font-weight: 500;
+  padding: .7rem 1.5rem;
+  border-radius: var(--r);
+  cursor: pointer;
+  transition: all .15s;
+  border: 1px solid transparent;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+.btn-primary:hover { background: var(--accent-h); border-color: var(--accent-h); }
+
+.btn-ghost {
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--border);
+}
+
+.btn-ghost:hover { background: var(--bg2); border-color: var(--ink3); }
+
+/* Card ── right side of hero */
+.hero-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 1.5rem;
+  min-width: 220px;
+  box-shadow: var(--shadow);
+}
+
+.card-avatar {
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--red));
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--serif);
+  font-size: 1.4rem;
+  color: #fff;
+  margin-bottom: 1rem;
+}
+
+.card-name { font-weight: 600; font-size: .95rem; margin-bottom: .15rem; }
+.card-sub { font-size: .75rem; color: var(--ink3); font-family: var(--mono); margin-bottom: 1rem; }
+
+.card-stats {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: .5rem;
+  border-top: 1px solid var(--border);
+  padding-top: 1rem;
+}
+
+.cstat { text-align: center; }
+.cstat-n {
+  font-family: var(--serif);
+  font-size: 1.5rem;
+  color: var(--accent);
+  display: block;
+  line-height: 1;
+  margin-bottom: .2rem;
+}
+.cstat-l {
+  font-family: var(--mono);
+  font-size: .58rem;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--ink3);
+}
+
+/* ── Sections ── */
+.section { padding: 4rem 0; border-top: 1px solid var(--border); }
+
+.sec-header {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  margin-bottom: 2.5rem;
+}
+
+.sec-tag {
+  font-family: var(--mono);
+  font-size: .65rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: .5rem;
+  display: flex; align-items: center; gap: .5rem;
+}
+.sec-tag::before { content:''; width:16px; height:1px; background: var(--accent); }
+
+.sec-title {
+  font-family: var(--serif);
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 400;
+  letter-spacing: -.015em;
+  line-height: 1.15;
+}
+
+.sec-title em { font-style: italic; color: var(--accent); }
+
+/* ── Skills ── */
+.skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+
+.skill-group { margin-bottom: 2rem; }
+
+.sg-title {
+  font-family: var(--mono);
+  font-size: .62rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--ink3);
+  margin-bottom: .85rem;
+  display: flex; align-items: center; gap: .6rem;
+}
+.sg-title::after { content:''; flex:1; height:1px; background: var(--border); }
+
+.chips { display: flex; flex-wrap: wrap; gap: .4rem; }
+
+.chip {
+  font-family: var(--mono);
+  font-size: .68rem;
+  padding: .28rem .7rem;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  color: var(--ink2);
+  background: var(--bg2);
+  transition: all .12s;
+}
+
+.chip:hover, .chip.hi {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-bg);
+}
+
+/* bar skills */
+.bar-skills { display: flex; flex-direction: column; gap: .9rem; }
+
+.bar-row {}
+.bar-top { display: flex; justify-content: space-between; margin-bottom: .3rem; font-size: .82rem; }
+.bar-pct { font-family: var(--mono); font-size: .65rem; color: var(--ink3); }
+.bar-track { height: 3px; background: var(--bg3); border-radius: 3px; overflow: hidden; }
+.bar-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 3px;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 1.1s cubic-bezier(.4,0,.2,1);
+}
+.bar-fill.go { transform: scaleX(1); }
+
+/* ── Projects ── */
+.projects-list { display: flex; flex-direction: column; }
+
+.proj-item {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 1.5rem;
+  padding: 1.75rem 0;
+  border-bottom: 1px solid var(--border2);
+  transition: background .15s;
+}
+
+.proj-period {
+  font-family: var(--mono);
+  font-size: .65rem;
+  color: var(--ink3);
+  line-height: 1.7;
+  padding-top: .15rem;
+}
+
+.proj-title {
+  font-family: var(--serif);
+  font-size: 1.08rem;
+  font-weight: 400;
+  margin-bottom: .4rem;
+}
+
+.proj-desc {
+  font-size: .83rem;
+  color: var(--ink2);
+  line-height: 1.75;
+  margin-bottom: .75rem;
+}
+
+.proj-role {
+  font-family: var(--mono);
+  font-size: .65rem;
+  color: var(--ink3);
+  margin-bottom: .6rem;
+}
+
+.proj-role span { color: var(--ink2); }
+
+.tech-list { display: flex; flex-wrap: wrap; gap: .35rem; }
+.tech { font-family: var(--mono); font-size: .62rem; padding: .2rem .6rem; border-radius: 3px; background: var(--accent-bg); color: var(--accent); border: 1px solid rgba(99,149,248,.2); }
+
+/* ── Timeline ── */
+.timeline { position: relative; padding-left: 1.5rem; }
+.timeline::before {
+  content:''; position:absolute; left:0; top:.4rem; bottom:0;
+  width: 1px; background: var(--border);
+}
+
+.tl-item { position: relative; padding-left: 1.5rem; margin-bottom: 2rem; }
+.tl-item::before {
+  content:''; position:absolute; left:-1.5rem; top:.4rem;
+  width:8px; height:8px; border-radius:50%;
+  background: var(--accent); border: 2px solid var(--bg);
+  box-shadow: 0 0 0 1px var(--accent);
+}
+
+.tl-period {
+  font-family: var(--mono); font-size: .63rem; letter-spacing: .06em;
+  color: var(--ink3); text-transform: uppercase; margin-bottom: .3rem;
+}
+
+.tl-title { font-weight: 600; font-size: .92rem; margin-bottom: .15rem; }
+.tl-org { font-size: .82rem; color: var(--accent); margin-bottom: .35rem; }
+.tl-scope { font-size: .82rem; color: var(--ink2); line-height: 1.6; }
+
+/* ── Awards ── */
+.awards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: .85rem; }
+
+.award-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 1.1rem 1.25rem;
+  display: flex; gap: .85rem; align-items: flex-start;
+  transition: border-color .15s, transform .15s;
+}
+
+.award-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+
+.award-ico { font-size: 1.2rem; padding-top: .05rem; }
+
+.award-title { font-size: .82rem; font-weight: 500; margin-bottom: .2rem; line-height: 1.4; }
+.award-year { font-family: var(--mono); font-size: .62rem; color: var(--ink3); }
+
+/* ── Contact ── */
+.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+
+.contact-blurb { font-size: .88rem; color: var(--ink2); line-height: 1.8; margin-bottom: 1.5rem; }
+
+.contact-links { display: flex; flex-direction: column; gap: .6rem; }
+
+.clink {
+  display: flex; align-items: center; gap: .85rem;
+  padding: .85rem 1rem;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  font-size: .85rem;
+  color: var(--ink);
+  transition: border-color .15s, background .15s;
+}
+
+.clink:hover { border-color: var(--accent); background: var(--accent-bg); color: var(--accent); }
+.clink-ico { font-size: .9rem; color: var(--ink3); flex-shrink: 0; }
+
+.contact-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 1.5rem;
+}
+
+.ccard-row {
+  display: flex; gap: 1rem; padding: .7rem 0; border-bottom: 1px solid var(--border2);
+  font-size: .83rem; align-items: flex-start;
+}
+.ccard-row:last-child { border-bottom: none; }
+.ccard-key { font-family: var(--mono); font-size: .62rem; color: var(--ink3); min-width: 80px; text-transform: uppercase; letter-spacing: .06em; padding-top: 2px; }
+.ccard-val { color: var(--ink); }
+.ccard-val.open { color: #16a34a; font-weight: 600; }
+
+/* ── Education layout ── */
+.edu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+
+/* ── Footer ── */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 2rem 1.5rem;
+  text-align: center;
+  font-family: var(--mono);
+  font-size: .65rem;
+  color: var(--ink3);
+  letter-spacing: .06em;
+}
+
+footer span { color: var(--red); }
+
+/* ── Reveal animation ── */
+.reveal { opacity:0; transform: translateY(20px); transition: opacity .7s ease, transform .7s ease; }
+.reveal.visible { opacity:1; transform: none; }
+
+/* ── Responsive ── */
+@media (max-width: 720px) {
+  .hero { grid-template-columns: 1fr; }
+  .hero-card { display: none; }
+  .skills-grid, .edu-grid, .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .proj-item { grid-template-columns: 1fr; gap: .5rem; }
+  .nav-links { display: none; }
+  .nav-avail { padding-right: 8rem; }
+}
+
+/* ── i18n: hide/show by lang ── */
+[data-lang="en"] .ja { display: none !important; }
+[data-lang="ja"] .en { display: none !important; }
+</style>
 </head>
-<body class="is-preload">
+<body>
 
-	<!-- Header -->
-	<div id="header">
+<!-- Controls -->
+<div class="controls">
+  <button class="ctrl-btn" id="langBtn" onclick="toggleLang()">
+    <span class="icon">🌐</span>
+    <span id="langLabel">日本語</span>
+  </button>
+  <button class="ctrl-btn" id="themeBtn" onclick="toggleTheme()">
+    <span class="icon" id="themeIcon">🌙</span>
+    <span id="themeLabel">Dark</span>
+  </button>
+</div>
 
-		<div class="top">
+<!-- Nav -->
+<nav>
+  <a href="#" class="nav-logo">Clark<span>.</span>Jay</a>
+  <ul class="nav-links">
+    <li><a href="#skills"    class="en">Skills</a>   <a href="#skills"    class="ja">スキル</a></li>
+    <li><a href="#projects"  class="en">Projects</a> <a href="#projects"  class="ja">プロジェクト</a></li>
+    <li><a href="#training"  class="en">Training</a> <a href="#training"  class="ja">トレーニング</a></li>
+    <li><a href="#awards"    class="en">Awards</a>   <a href="#awards"    class="ja">受賞</a></li>
+    <li><a href="#contact"   class="en">Contact</a>  <a href="#contact"   class="ja">連絡先</a></li>
+  </ul>
 
-			<!-- Logo -->
-			<!-- <div id="logo">
-				<span class="image avatar48"><img src="images/Profile.jpg" alt="" /></span>
-				<h1 id="title">Clark Jay Cortezano</h1>
-				<p>Software Engineer</p>
-			</div>-->
-			<!-- Nav -->
-			<nav id="nav">
-				<ul>
-					<li><a href="#profile" id="top-link"><span class="icon solid fa-user">Profile</span></a></li>
-					<li><a href="#skills" id="portfolio-link"><span class="icon solid fa-th">Skills</span></a></li>
-					<li><a href="#projectexperience" id="portfolio-link"><span class="icon solid fa-th">Project Experience</span></a></li>
-					<li><a href="#training" id="portfolio-link"><span class="icon solid fa-th">Training</span></a></li>
-					<li><a href="#education" id="about-link"><span class="icon solid fa-home">Education</span></a></li>
-					<!--<li><a href="#contact" id="contact-link"><span class="icon solid fa-envelope">Contact</span></a></li> -->
-				</ul>
-			</nav>
+</nav>
 
-		</div>
+<!-- ═══════════════════ HERO ═══════════════════ -->
+<div class="page">
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow en">Software Engineer · Cebu, Philippines</div>
+    <div class="hero-eyebrow ja">ソフトウェアエンジニア · フィリピン、セブ市</div>
 
-		<div class="bottom">
+    <h1 class="hero-name">Clark Jay<br><em>Cortezano</em></h1>
 
-			<!-- Social Icons -->
-			<!--<ul class="icons">
-				<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-				<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-				<li><a href="#" class="icon brands fa-github"><span class="label">Github</span></a></li>
-				<li><a href="#" class="icon brands fa-dribbble"><span class="label">Dribbble</span></a></li>
-				<li><a href="#" class="icon solid fa-envelope"><span class="label">Email</span></a></li>
-			</ul>-->
+    <p class="hero-role en">Developer · Tester · Quality Enhancer</p>
+    <p class="hero-role ja">開発者 · 検証者 · 品質強化実施者</p>
 
-		</div>
+    <p class="hero-bio en">Software engineer with 6+ years of experience spanning full-cycle development, testing, and quality enhancement across banking, healthcare, and enterprise systems. Comfortable working with Japanese-language design documents and cross-team collaboration in Japanese.</p>
+    <p class="hero-bio ja">開発・テスト・品質強化を含むフルサイクル開発に6年以上の経験を持つソフトウェアエンジニア。銀行、医療、企業システムを跨いで活躍。日本語による詳細設計書の読解や、日本語でのチーム間連携も対応可能。</p>
 
-	</div>
+    <div class="hero-meta">
+      <span class="meta-pill en">🇺🇸 English — Proficient</span>
+      <span class="meta-pill en jp">🇯🇵 Japanese — JLPT N4</span>
+      <span class="meta-pill ja">🇺🇸 英語 — 堪能</span>
+      <span class="meta-pill ja jp">🇯🇵 日本語 — JLPT N4合格</span>
+      <span class="meta-pill en">🇵🇭 Tagalog · Bisaya</span>
+      <span class="meta-pill ja">🇵🇭 タガログ語 · ビサヤ語</span>
+    </div>
 
-	<!-- Main -->
-	<div id="main">
+    <div class="hero-ctas">
+      <a href="#contact" class="btn btn-primary en">Get in Touch</a>
+      <a href="#contact" class="btn btn-primary ja">お問い合わせ</a>
+      <a href="#projects" class="btn btn-ghost en">View Projects →</a>
+      <a href="#projects" class="btn btn-ghost ja">プロジェクトを見る →</a>
+    </div>
+  </div>
 
-		<!-- Profile -->
-		<section id="profile" class="one dark cover">
+  <div class="hero-card">
+    <div class="card-avatar">CJ</div>
+    <div class="card-name">Clark Jay Cortezano</div>
+    <div class="card-sub en">software_engineer.java</div>
+    <div class="card-sub ja">ソフトウェアエンジニア</div>
+    <div class="card-stats">
+      <div class="cstat"><span class="cstat-n">6.6</span><span class="cstat-l en">Yrs Exp</span><span class="cstat-l ja">年経験</span></div>
+      <div class="cstat"><span class="cstat-n">8</span><span class="cstat-l en">Projects</span><span class="cstat-l ja">PJ数</span></div>
+      <div class="cstat"><span class="cstat-n">N4</span><span class="cstat-l en">JLPT</span><span class="cstat-l ja">日本語</span></div>
+      <div class="cstat"><span class="cstat-n">BS</span><span class="cstat-l en">CompEng</span><span class="cstat-l ja">学位</span></div>
+    </div>
+  </div>
+</section>
 
+<!-- ═══════════════════ SKILLS ═══════════════════ -->
+<section class="section reveal" id="skills">
+  <div class="sec-header">
+    <div>
+      <div class="sec-tag en">Expertise</div>
+      <div class="sec-tag ja">技術スキル</div>
+      <h2 class="sec-title en">Technical <em>Skills</em></h2>
+      <h2 class="sec-title ja">技術 <em>スキル</em></h2>
+    </div>
+  </div>
 
-			<div class="container profile">
+  <div class="skills-grid">
+    <div>
+      <div class="skill-group">
+        <div class="sg-title en">Languages</div>
+        <div class="sg-title ja">言語</div>
+        <div class="bar-skills">
+          <div class="bar-row"><div class="bar-top"><span>Java</span><span class="bar-pct">90%</span></div><div class="bar-track"><div class="bar-fill" style="width:90%"></div></div></div>
+          <div class="bar-row"><div class="bar-top"><span>C# / VB</span><span class="bar-pct">85%</span></div><div class="bar-track"><div class="bar-fill" style="width:85%"></div></div></div>
+          <div class="bar-row"><div class="bar-top"><span>C / C++</span><span class="bar-pct">80%</span></div><div class="bar-track"><div class="bar-fill" style="width:80%"></div></div></div>
+          <div class="bar-row"><div class="bar-top"><span>HTML / CSS / JSON</span><span class="bar-pct">78%</span></div><div class="bar-track"><div class="bar-fill" style="width:78%"></div></div></div>
+          <div class="bar-row"><div class="bar-top"><span>SQL (MySQL · MSSQL · DB2)</span><span class="bar-pct">82%</span></div><div class="bar-track"><div class="bar-fill" style="width:82%"></div></div></div>
+          <div class="bar-row"><div class="bar-top"><span>Shell Script</span><span class="bar-pct">72%</span></div><div class="bar-track"><div class="bar-fill" style="width:72%"></div></div></div>
+        </div>
+      </div>
 
-				<!-- Image -->
-				<div class="profile left">
-					<div>
-						<h2 class="alt">CLARK JAY CORTEZANO</h2>
-						<p>Software Engineer</p>
-						<div class="profile detail">
-							<p>
-								Address : Cebu City <br>
-								Contact Number : 09163920207 or 4108134 <br>
-								Email : clarkjaycortezano@gmail.com
-							</p>
-						</div>
-					</div>
+      <div class="skill-group">
+        <div class="sg-title en">Frameworks & Platforms</div>
+        <div class="sg-title ja">フレームワーク</div>
+        <div class="chips">
+          <span class="chip hi">Spring / Spring Boot</span>
+          <span class="chip hi">.NET</span>
+          <span class="chip">JUnit · Mockito</span>
+          <span class="chip">Intra-mart</span>
+          <span class="chip">Apache Tomcat</span>
+          <span class="chip">Docker · LocalStack</span>
+          <span class="chip">Restful API</span>
+          <span class="chip">SOAP</span>
+        </div>
+      </div>
+    </div>
 
+    <div>
+      <div class="skill-group">
+        <div class="sg-title en">Dev Process</div>
+        <div class="sg-title ja">開発工程</div>
+        <div class="chips">
+          <span class="chip hi">Design Spec Writing</span>
+          <span class="chip hi">Unit Testing (UT)</span>
+          <span class="chip hi">System Testing (ST)</span>
+          <span class="chip">Integration Testing</span>
+          <span class="chip">Quality Enhancement</span>
+          <span class="chip">Code Review</span>
+          <span class="chip">Bug Investigation</span>
+        </div>
+      </div>
 
-				</div>
-				<div class="profile right">
-					<span class="image avatar48"><img src="images/Profile.jpg" alt="" /></span>
-					<br>
-					<br>
-				</div>
-				<div class="profile objective" style="vertical-align:bottom">
-					<p>
-						<b style="color:aliceblue">OBJECTIVE:</b> <br>
-						Software Engineer with over 4 years of work experience with development, coding, testing, quality improvement, and adaptability to changing environments.
-						Seeking a dynamic and innovative company where I can apply and enhance my programming skills and problem-solving abilities in a challenging software engineering position.
-					</p>
-				</div>
+      <div class="skill-group">
+        <div class="sg-title en">Cloud & AWS</div>
+        <div class="sg-title ja">クラウド</div>
+        <div class="chips">
+          <span class="chip hi">AWS CodeCommit</span>
+          <span class="chip hi">AWS S3</span>
+          <span class="chip">AWS Log Insight</span>
+          <span class="chip">AWS Session Manager</span>
+          <span class="chip">AWS Workspaces</span>
+          <span class="chip">Oracle Cloud</span>
+        </div>
+      </div>
 
+      <div class="skill-group">
+        <div class="sg-title en">Tools</div>
+        <div class="sg-title ja">ツール</div>
+        <div class="chips">
+          <span class="chip">Git · SVN</span>
+          <span class="chip">Eclipse</span>
+          <span class="chip">IntelliJ IDEA</span>
+          <span class="chip">Visual Studio</span>
+          <span class="chip">DBeaver</span>
+          <span class="chip">Postman · SOAPUI</span>
+          <span class="chip">Redmine</span>
+          <span class="chip">SonarQube · Jacoco</span>
+          <span class="chip">CheckStyle · CPPCheck</span>
+          <span class="chip">Docker</span>
+          <span class="chip">TeraTerm · WinSCP</span>
+          <span class="chip">JP1 Scheduler</span>
+          <span class="chip">SAP SuccessFactors</span>
+          <span class="chip">Selenium</span>
+          <span class="chip">TestProject.io</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-			</div>
-		</section>
+<!-- ═══════════════════ PROJECTS ═══════════════════ -->
+<section class="section reveal" id="projects">
+  <div class="sec-header">
+    <div>
+      <div class="sec-tag en">Work History</div>
+      <div class="sec-tag ja">業務実績</div>
+      <h2 class="sec-title en">Project <em>Experience</em></h2>
+      <h2 class="sec-title ja">プロジェクト <em>経験</em></h2>
+    </div>
+  </div>
 
-		<!-- Skills -->
-		<section id="skills" class="two">
-			<div class="container">
+  <div class="projects-list">
 
-				<header>
-					<h3>Non-Technical Skills</h3>
-				</header>
-				<div class="skills">
-					<h4><b>Communication skills : </b>English(Proficient), Japanese(JLPT N4 Level), Tagalog, Bisaya</h4>
-				</div>
-				<hr />
-				<header>
-					<h3>Technical Skills</h3>
-				</header>
-				<div class="skills">
-					<p>
-						<b>Development Process : </b>Design Specification Creation,Coding,Test Specification Creation, Unit Test, Integration Test, System Test, Quality Enhancement <br>
-						<b>Programming Language :</b> C, C#, Java, VB<br>
-						<b>Test Automation : </b>TestProject.io,Selenium<br>
-						<b>WEB Technology : </b>HTML, CSS, Javascript, JSON<br>
-						<b>Database :  </b>Microsoft SQL, SI object browser for Oracle<br>
-						<b>IDE : </b> Eclipse, Visual Studio 2019, Android studio<br>
-						<b>OS :  </b>Windows 7/10<br>
-						<b>Others :  </b>SVN, Redmine, Git, InputMan, HyperV, MS Excel, SAP SuccessFactors<br>
-					</p>
-				</div>
+    <!-- Project 1 -->
+    <div class="proj-item">
+      <div class="proj-period en">Feb 2026<br>→ Present</div>
+      <div class="proj-period ja">2026年2月<br>→ 現在</div>
+      <div>
+        <div class="proj-title en">Next-Gen Core Banking System</div>
+        <div class="proj-title ja">次期勘定系システム更改</div>
+        <div class="proj-desc en">Replacing the existing core banking system with a redesigned cloud-based architecture to support an expanding customer base and optimize costs.</div>
+        <div class="proj-desc ja">拡大する顧客基盤を支援するため、既存の勘定系システムをクラウドベースの新アーキテクチャへ移行し、コスト最適化を図るプロジェクト。</div>
+        <div class="proj-role en"><span>Role:</span> Developer · Unit Tester · Reviewer</div>
+        <div class="proj-role ja"><span>役割:</span> 開発者、単体テスト、レビュアー</div>
+        <div class="tech-list">
+          <span class="tech">Java</span><span class="tech">Spring Boot</span><span class="tech">JUnit</span>
+          <span class="tech">Eclipse</span><span class="tech">AWS Workspaces</span><span class="tech">GitLab</span>
+          <span class="tech">CheckStyle</span><span class="tech">Jacoco</span><span class="tech">Windows 11</span>
+        </div>
+      </div>
+    </div>
 
+    <!-- Project 2 -->
+    <div class="proj-item">
+      <div class="proj-period en">Aug 2025<br>→ Jan 2026</div>
+      <div class="proj-period ja">2025年8月<br>→ 2026年1月</div>
+      <div>
+        <div class="proj-title en">Steel Cost Accounting System</div>
+        <div class="proj-title ja">鋼材経理システム</div>
+        <div class="proj-desc en">Rebuilding a legacy cost management system using Java Spring batch processing and automated tools. Focused on internal design documentation, coding, and unit testing from external design specs.</div>
+        <div class="proj-desc ja">IR/AWAG（画面）、Java Spring（バッチ処理）、自動生成ツールを活用して原価管理レガシーシステムを再構築。外部設計書を元に内部設計書、コーディング、単体テストを実施。</div>
+        <div class="proj-role en"><span>Role:</span> Batch Internal Design · Coding · Unit Testing · Bug Fix</div>
+        <div class="proj-role ja"><span>役割:</span> バッチ内部設計書、コーディング、単体テスト・Ita障害対応</div>
+        <div class="tech-list">
+          <span class="tech">Java</span><span class="tech">Spring Boot</span><span class="tech">JUnit</span>
+          <span class="tech">MS SQL Server</span><span class="tech">AWS CodeCommit</span><span class="tech">SonarQube</span>
+          <span class="tech">Jacoco</span><span class="tech">Eclipse</span><span class="tech">Windows 11</span>
+        </div>
+      </div>
+    </div>
 
+    <!-- Project 3 -->
+    <div class="proj-item">
+      <div class="proj-period en">Apr 2025<br>→ Jul 2025</div>
+      <div class="proj-period ja">2025年4月<br>→ 2025年7月</div>
+      <div>
+        <div class="proj-title en">Clinical Information System (CIS) Maintenance</div>
+        <div class="proj-title ja">Clinical Information System (CIS) — Maintenance</div>
+        <div class="proj-desc en">Maintenance development for a CIS deployed across multiple hospitals in Japan. Responsibilities include system upgrades, performance improvements, new features, and technical documentation.</div>
+        <div class="proj-desc ja">日本国内の複数病院に導入されているCISのMaintenance開発。システムアップグレード、パフォーマンス改善、新機能実装、技術文書作成を担当。</div>
+        <div class="proj-role en"><span>Role:</span> Developer · ITa · Bug Investigation & Fix</div>
+        <div class="proj-role ja"><span>役割:</span> 開発者、ITa実施、不具合再現・調査・対応</div>
+        <div class="tech-list">
+          <span class="tech">C++</span><span class="tech">C#</span><span class="tech">Visual Studio 2013/2022</span>
+          <span class="tech">IBM DB2</span><span class="tech">SQL</span><span class="tech">Git</span>
+          <span class="tech">Apache Tomcat</span><span class="tech">CPPCheck</span><span class="tech">Redmine</span>
+        </div>
+      </div>
+    </div>
 
-			</div>
-		</section>
+    <!-- Project 4 -->
+    <div class="proj-item">
+      <div class="proj-period en">Dec 2023<br>→ Mar 2025</div>
+      <div class="proj-period ja">2023年12月<br>→ 2025年3月</div>
+      <div>
+        <div class="proj-title en">Home Loan Management System (Onsite)</div>
+        <div class="proj-title ja">住宅ローン管理システム（オンサイト）</div>
+        <div class="proj-desc en">Full digital transformation of the home loan business flow — from application to contract and post-contract admin. Responsible for coding, unit test planning, bug investigation and slow query tuning.</div>
+        <div class="proj-desc ja">申込から審査、契約、契約後事務を含む住宅ローン業務フローを完全デジタル化。コーディング、単体テスト計画、不具合調査・対応、DBスロークエリ対応を担当。</div>
+        <div class="proj-role en"><span>Role:</span> Developer · UT · Test Planning · LT · Bug Fix</div>
+        <div class="proj-role ja"><span>役割:</span> 開発者、単体テスト計画・実施、LT打鍵計画・実施、不具合調査</div>
+        <div class="tech-list">
+          <span class="tech">Java</span><span class="tech">Spring</span><span class="tech">Shell Script</span>
+          <span class="tech">MySQL</span><span class="tech">IntelliJ IDEA</span><span class="tech">Restful API</span>
+          <span class="tech">SOAP</span><span class="tech">AWS CodeCommit</span><span class="tech">AWS S3</span>
+          <span class="tech">Docker</span><span class="tech">LocalStack</span><span class="tech">Postman</span>
+        </div>
+      </div>
+    </div>
 
-		<!-- Project Experience -->
-		<section id="projectexperience" class="two">
-			<div class="container">
+    <!-- Project 5 -->
+    <div class="proj-item">
+      <div class="proj-period en">Apr 2023<br>→ Nov 2023</div>
+      <div class="proj-period ja">2023年4月<br>→ 2023年11月</div>
+      <div>
+        <div class="proj-title en">Syndicated Loan Management System (Onsite)</div>
+        <div class="proj-title ja">シンジケートローン管理システム（オンサイト）</div>
+        <div class="proj-desc en">Maintenance and new feature additions for a syndicated loan management system running on AIX and Redhat. Conducted LT and ST, working directly from Japanese test specifications.</div>
+        <div class="proj-desc ja">シンジケートローン管理システムの保守・新機能追加。AIX/Redhat環境でのLTおよびSTを実施。日本語手順書に従い打鍵および証跡取得を担当。</div>
+        <div class="proj-role en"><span>Role:</span> Developer · UT · LT · Bug Investigation</div>
+        <div class="proj-role ja"><span>役割:</span> 開発者、単体テスト、LTテスト計画・実施、不具合調査</div>
+        <div class="tech-list">
+          <span class="tech">Java</span><span class="tech">JavaScript</span><span class="tech">Shell Script</span>
+          <span class="tech">Oracle DB</span><span class="tech">AIX</span><span class="tech">Redhat</span>
+          <span class="tech">SVN</span><span class="tech">Eclipse</span><span class="tech">TeraTerm</span>
+        </div>
+      </div>
+    </div>
 
-				<header>
-					<h2>Project Experience</h2>
-				</header>
+    <!-- Project 6 -->
+    <div class="proj-item">
+      <div class="proj-period en">Oct 2022<br>→ Mar 2023</div>
+      <div class="proj-period ja">2022年10月<br>→ 2023年3月</div>
+      <div>
+        <div class="proj-title en">Data Migration Rehearsal — Oracle Cloud (Onsite)</div>
+        <div class="proj-title ja">データ移行リハーサル（オンサイト）</div>
+        <div class="proj-desc en">Three-phase data migration (rehearsal, validation, production) to Oracle Cloud. Executed Japanese procedures for data file loading, scheduled process validation, and outbound data handoff.</div>
+        <div class="proj-desc ja">Oracle Cloudへのデータ移行を3フェーズ（リハーサル・検証・本番）で実施。日本語手順書に従いデータ受信・件数確認・ファイルロード・インポート・現新突合を担当。</div>
+        <div class="proj-role en"><span>Role:</span> Executor · Validator</div>
+        <div class="proj-role ja"><span>役割:</span> 実施者、検証</div>
+        <div class="tech-list">
+          <span class="tech">Oracle Cloud</span><span class="tech">JP1/AJMS3</span><span class="tech">TeraTerm</span>
+          <span class="tech">WinSCP</span><span class="tech">MS Remote Desktop</span><span class="tech">SharePoint</span>
+        </div>
+      </div>
+    </div>
 
-				<div class="row">
-					<div class="col-6 col-12-mobile">
-						<article class="item">
-							<header>
-								<a href="#">
-									<h3><u>Syndicated Loan Management System</u></h3>
-									<h5>April 2023 ~ Present</h5>
-									<h6 style="text-align:left">
-										Technologies<br />
-										&emsp;Platform : AIX, Redhat<br />
-										&emsp;Language : Java, Javascript, Shell Script<br />
-										&emsp;Database : Oracle<br />
-										&emsp;Others : Intra-mart, SVN, TeraTerm, Eclipse, Jp1 Scheduler<br />
-										<br />
-									</h6>
-								</a>
-							</header>
+    <!-- Project 7 -->
+    <div class="proj-item">
+      <div class="proj-period en">Jan 2022<br>→ Oct 2022</div>
+      <div class="proj-period ja">2022年1月<br>→ 2022年10月</div>
+      <div>
+        <div class="proj-title en">SAP SuccessFactors HR Integration (Offshore)</div>
+        <div class="proj-title ja">SAP SuccessFactors（オフショア）</div>
+        <div class="proj-desc en">New HR system SAP integration. Developed Canvas Reports from Japanese definition documents, created unit test specs, and managed environment and data investigation.</div>
+        <div class="proj-desc ja">新人事システムのSAPインテグレーション。日本語定義書を元にCanvas Reportsのコーディングを実施。単体テスト仕様書の作成・実行・修正対応も担当。</div>
+        <div class="proj-role en"><span>Role:</span> Developer · Coder · Tester</div>
+        <div class="proj-role ja"><span>役割:</span> 開発者、コーディング、テスティング、調査</div>
+        <div class="tech-list">
+          <span class="tech">SAP SuccessFactors</span><span class="tech">Canvas Reports</span><span class="tech">MS Excel</span><span class="tech">Windows 10</span>
+        </div>
+      </div>
+    </div>
 
-						</article>
-					</div>
-					<div class="col-6 col-12-mobile">
-						<article class="item">
-							<header>
-								<a href="#">
-									<h3><u>Data Migration Rehearsal</u></h3>
-									<h5>October 2022 ~ March 2023</h5>
-									<h6 style="text-align:left">
-										Technologies<br />
-										&emsp;Environment : Oracle Cloud (Rehearsal, Validation, and Production) Environment<br />
-										&emsp;Terminal : Cloud Terminal, On-premise Terminal<br />
-										&emsp;Tools : JP1/AJMS3, TeraTerm, Sakura Editor, WinSCP<br />
-										&emsp;Remote Access : Microsoft Remote Desktop<br />
-										&emsp;Others : SharePoint, MS Excel, MS Teams<br />
-									</h6>
-								</a>
-							</header>
-						</article>
-					</div>
-					<div class="col-6 col-12-mobile">
-						<article class="item">
-							<header>
-								<a href="#">
-									<h3><u>Personal and Bank Information Management System Migration</u></h3>
-									<h5>January 2022 ~ October 2022</h5>
-									<h6 style="text-align:left">
-										Technologies<br />
-										&emsp;OS :  Windows 10<br />
-										&emsp;Platform : SAP SuccessFactors (Reports, Canvas Reports)<br />
-										<br />
-										<br />
-									</h6>
-								</a>
-							</header>
-						</article>
-					</div>
-					<div class="col-6 col-12-mobile">
-						<article class="item">
+    <!-- Project 8 -->
+    <div class="proj-item">
+      <div class="proj-period en">Oct 2019<br>→ Sep 2020</div>
+      <div class="proj-period ja">2019年10月<br>→ 2020年9月</div>
+      <div>
+        <div class="proj-title en">Rent Guarantee Core System Renewal (Offshore)</div>
+        <div class="proj-title ja">家賃債務保証基幹システム更改開発（オフショア）</div>
+        <div class="proj-desc en">Full-cycle renewal: migrated a legacy VB6 system to C#. Handled design documentation, coding (~20,000 LOC across 2 screens), white-box unit testing, peer review, and quality enhancement.</div>
+        <div class="proj-desc ja">VB6からC#への旧システム刷新。設計書作成・コーディング（2画面、約20,000LOC）・ホワイトボックス単体テスト・ピアレビュー・品質強化を全工程担当。</div>
+        <div class="proj-role en"><span>Role:</span> Developer · Design · UT · QA · Code Review</div>
+        <div class="proj-role ja"><span>役割:</span> 開発者、設計書作成、コーディング、単体テスト、品質強化、レビュー</div>
+        <div class="tech-list">
+          <span class="tech">VB6</span><span class="tech">C#</span><span class="tech">MS SQL</span>
+          <span class="tech">SVN</span><span class="tech">Git</span><span class="tech">Redmine</span><span class="tech">Windows XP/10</span>
+        </div>
+      </div>
+    </div>
 
-							<header>
-								<a href="#">
-									<h3><u>ETL Tool Job Creation and Update</u></h3>
-									<h5>May 2021 ~ December 2021</h5>
-									<h6 style="text-align:left">
-										Technologies<br />
-										&emsp;Tools : WAHA! ETL Tools<br />
-										&emsp;Remote : CITRIX (VDI)<br />
-										&emsp;Others : MS Excel, Excel Macro<br />
-										<br />
-									</h6>
-								</a>
-							</header>
-						</article>
-					</div>
-					<div class="col-6 col-12-mobile">
-						<article class="item">
-							<header>
-								<a href="#">
-									<h3><u>Rent Obligation Guarantee Core System Renewal and Development</u></h3>
-									<h5>October 2019 ~ September 2020</h5>
-									<h6 style="text-align:left">
-										Technologies<br />
-										&emsp;OS : Windows XP Professional, Windows 10<br />
-										&emsp;Language : VB6, C#<br />
-										&emsp;Database : Microsoft SQL<br />
-										&emsp;Others : SVN, Redmine, Git<br />
-									</h6>
-								</a>
-							</header>
-						</article>
-					</div>
-				</div>
-		</section>
+  </div>
+</section>
 
-		<!-- Training -->
-		<section id="training" class="three">
-			<div class="container">
+<!-- ═══════════════════ TRAINING & EDUCATION ═══════════════════ -->
+<section class="section reveal" id="training">
+  <div class="sec-header">
+    <div>
+      <div class="sec-tag en">Background</div>
+      <div class="sec-tag ja">経歴</div>
+      <h2 class="sec-title en">Training & <em>Education</em></h2>
+      <h2 class="sec-title ja">トレーニング・<em>学歴</em></h2>
+    </div>
+  </div>
 
-				<header>
-					<h2>Training</h2>
-				</header>
-				<hr />
-				<h3><u>Focus Test Automation</u></h3>
-				<h4>
-					Nov 2020 ~ Apr 2021<br />
-					Scope: Selenium, TestProject.io, Kanban
-				</h4>
-				<hr />
-				<h3><u>ACTION (AWS Center for Technology Incubation) FE Training</u></h3>
-				<h4>
-					Jun 2019 ~ Nov 2019<br />
-					Scope: Japanese Language (N5, N4), Java, C, Web Development, MySQL, Business Fundamentals
-				</h4>
-				<hr />
-				<h3><u>MITSUMI Robotics</u></h3>
-				<h4>
-					2017 ~ 2018<br />
-					Scope: Pneumatics, Camera Vision System, Assembly Line Fundamentals
-				</h4>
-				<hr />
-			</div>
-		</section>
+  <div class="edu-grid">
+    <div>
+      <div class="sg-title en" style="margin-bottom:1.25rem">Training</div>
+      <div class="sg-title ja" style="margin-bottom:1.25rem">トレーニング</div>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-period en">Nov 2020 — Apr 2021</div>
+          <div class="tl-period ja">2020年11月 〜 2021年4月</div>
+          <div class="tl-title en">Focus Test Automation</div>
+          <div class="tl-title ja">Focus テスト自動化</div>
+          <div class="tl-scope">Selenium · TestProject.io · Kanban</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-period en">Jun 2019 — Nov 2019</div>
+          <div class="tl-period ja">2019年6月 〜 2019年11月</div>
+          <div class="tl-title en">ACTION — AWS FE Training Program</div>
+          <div class="tl-title ja">ACTION — AWS FE研修</div>
+          <div class="tl-org">AWS Center for Technology Incubation</div>
+          <div class="tl-scope en">Japanese Language (JLPT N5, N4) · Java · C · Web Development · MySQL · Business Fundamentals</div>
+          <div class="tl-scope ja">日本語（N5・N4） · Java · C · Web開発 · MySQL · ビジネス基礎</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-period">2017 — 2018</div>
+          <div class="tl-title">MITSUMI Robotics</div>
+          <div class="tl-scope en">Pneumatics · Camera Vision Systems · Assembly Line</div>
+          <div class="tl-scope ja">空気圧 · カメラビジョンシステム · 製造ライン</div>
+        </div>
+      </div>
+    </div>
 
-		<!-- Education -->
-		<section id="education" class="four">
-			<div class="container">
+    <div>
+      <div class="sg-title en" style="margin-bottom:1.25rem">Education</div>
+      <div class="sg-title ja" style="margin-bottom:1.25rem">学歴</div>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-period en">Graduated 2019</div>
+          <div class="tl-period ja">2019年卒業</div>
+          <div class="tl-title en">BS Computer Engineering</div>
+          <div class="tl-title ja">コンピュータエンジニアリング学士</div>
+          <div class="tl-org">Cebu Institute of Technology — University (CIT-U)</div>
+          <div class="tl-scope en">Cebu City, Philippines</div>
+          <div class="tl-scope ja">フィリピン、セブ市</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-				<header>
-					<h2>Education</h2>
-				</header>
-				<hr />
-				<h3><u>Bachelor of Science in Computer Engineering</u></h3>
-				<h4>
-					Cebu Institute of Technology-University<br />
-					2019
-				</h4>
-				<hr />
-				<div class="education">
-					<h4><u>Activities, Honors, and Awards</u></h4>
-					<ul>
-						<li>Cebu City Governments Scholarship Program for 5 years</li>
-						<li>4th Place ICpEP.SE Logic Circuits Design Competition 2017</li>
-						<li>1st Runner up ICpEP.SE Logic Circuits Design Competition 2018</li>
-						<li>1st Runner up CESAFI Robotics Competition 2018</li>
-						<li>Semi-Finalist in Accenture’s Program The Future Challenge 2018</li>
-					</ul>
-				</div>
+<!-- ═══════════════════ AWARDS ═══════════════════ -->
+<section class="section reveal" id="awards">
+  <div class="sec-header">
+    <div>
+      <div class="sec-tag en">Honors</div>
+      <div class="sec-tag ja">受賞・表彰</div>
+      <h2 class="sec-title en">Awards & <em>Recognition</em></h2>
+      <h2 class="sec-title ja">受賞・<em>表彰</em></h2>
+    </div>
+  </div>
 
+  <div class="awards-grid">
+    <div class="award-card">
+      <div class="award-ico">🏛️</div>
+      <div>
+        <div class="award-title en">Cebu City Government Scholarship Program (5 Years)</div>
+        <div class="award-title ja">セブ市政府奨学金プログラム（5年間）</div>
+        <div class="award-year">2014 — 2019</div>
+      </div>
+    </div>
+    <div class="award-card">
+      <div class="award-ico">🥇</div>
+      <div>
+        <div class="award-title en">1st Runner-up — ICpEP.SE Logic Circuits Design Competition</div>
+        <div class="award-title ja">1位入賞 — ICpEP.SE ロジック回路設計コンテスト</div>
+        <div class="award-year">2018</div>
+      </div>
+    </div>
+    <div class="award-card">
+      <div class="award-ico">🏅</div>
+      <div>
+        <div class="award-title en">4th Place — ICpEP.SE Logic Circuits Design Competition</div>
+        <div class="award-title ja">4位 — ICpEP.SE ロジック回路設計コンテスト</div>
+        <div class="award-year">2017</div>
+      </div>
+    </div>
+    <div class="award-card">
+      <div class="award-ico">🤖</div>
+      <div>
+        <div class="award-title en">1st Runner-up — CESAFI Robotics Competition</div>
+        <div class="award-title ja">1位入賞 — CESAFIロボティクスコンテスト</div>
+        <div class="award-year">2018</div>
+      </div>
+    </div>
+    <div class="award-card">
+      <div class="award-ico">⭐</div>
+      <div>
+        <div class="award-title en">Semi-Finalist — Accenture "Program The Future" Challenge</div>
+        <div class="award-title ja">準決勝進出 — アクセンチュア「Program The Future」</div>
+        <div class="award-year">2018</div>
+      </div>
+    </div>
+  </div>
+</section>
 
+<!-- ═══════════════════ CONTACT ═══════════════════ -->
+<section class="section reveal" id="contact">
+  <div class="sec-header">
+    <div>
+      <div class="sec-tag en">Let's Connect</div>
+      <div class="sec-tag ja">お問い合わせ</div>
+      <h2 class="sec-title en">Get in <em>Touch</em></h2>
+      <h2 class="sec-title ja"><em>連絡</em>はこちらから</h2>
+    </div>
+  </div>
 
-			</div>
-		</section>
+  <div class="contact-grid">
+    <div>
+      <p class="contact-blurb en">Open to new opportunities — software engineering roles, offshore/onsite projects, and Japanese-client collaborations. I respond within 24 hours.</p>
+      <p class="contact-blurb ja">ソフトウェアエンジニアのポジション、オフショア・オンサイトプロジェクト、日本クライアントとの協業など、新しい機会を歓迎しています。24時間以内に返信いたします。</p>
+      <div class="contact-links">
+        <a href="mailto:clarkjaycortezano@gmail.com" class="clink">
+          <span class="clink-ico">✉</span>
+          clarkjaycortezano@gmail.com
+        </a>
+        <a href="tel:09198180823" class="clink">
+          <span class="clink-ico">📞</span>
+          +63 919-818-0823
+        </a>
+        <a href="https://clark-jay.github.io/resume/" target="_blank" class="clink">
+          <span class="clink-ico">🌐</span>
+          clark-jay.github.io/resume
+        </a>
+        <div class="clink" style="cursor:default">
+          <span class="clink-ico">📍</span>
+          <span class="en">Cebu City, Philippines</span>
+          <span class="ja">フィリピン、セブ市</span>
+        </div>
+      </div>
+    </div>
 
-		<!-- Contact -->
-		<!--<section id="contact" class="four">
-		<div class="container">
+    <div class="contact-card">
+      <div class="ccard-row">
+        <span class="ccard-key en">Role</span>
+        <span class="ccard-key ja">役割</span>
+        <span class="ccard-val en">Software Engineer</span>
+        <span class="ccard-val ja">ソフトウェアエンジニア</span>
+      </div>
+      <div class="ccard-row">
+        <span class="ccard-key en">Exp.</span>
+        <span class="ccard-key ja">経験</span>
+        <span class="ccard-val">6.6 <span class="en">Years</span><span class="ja">年</span></span>
+      </div>
+      <div class="ccard-row">
+        <span class="ccard-key en">Main Lang</span>
+        <span class="ccard-key ja">主要言語</span>
+        <span class="ccard-val">Java, C#, C++</span>
+      </div>
+      <div class="ccard-row">
+        <span class="ccard-key en">Japanese</span>
+        <span class="ccard-key ja">日本語</span>
+        <span class="ccard-val">JLPT N4</span>
+      </div>
+      <div class="ccard-row">
+        <span class="ccard-key en">Location</span>
+        <span class="ccard-key ja">所在地</span>
+        <span class="ccard-val en">Cebu, PH</span>
+        <span class="ccard-val ja">セブ市（フィリピン）</span>
+      </div>
 
-			<header>
-				<h2>Contact</h2>
-			</header>
+    </div>
+  </div>
+</section>
+</div><!-- /page -->
 
-			<p>
-				Elementum sem parturient nulla quam placerat viverra
-				mauris non cum elit tempus ullamcorper dolor. Libero rutrum ut lacinia
-				donec curae mus. Eleifend id porttitor ac ultricies lobortis sem nunc
-				orci ridiculus faucibus a consectetur. Porttitor curae mauris urna mi dolor.
-			</p>
+<!-- Footer -->
+<footer>
+  <span class="en">© 2026 Clark Jay Cortezano · Software Engineer · Cebu, Philippines · Made with <span>♥</span></span>
+  <span class="ja">© 2026 クラーク・ジェイ・コルテザーノ · ソフトウェアエンジニア · フィリピン、セブ市 · <span>♥</span> を込めて</span>
+</footer>
 
-			<form method="post" action="#">
-				<div class="row">
-					<div class="col-6 col-12-mobile"><input type="text" name="name" placeholder="Name" /></div>
-					<div class="col-6 col-12-mobile"><input type="text" name="email" placeholder="Email" /></div>
-					<div class="col-12">
-						<textarea name="message" placeholder="Message"></textarea>
-					</div>
-					<div class="col-12">
-						<input type="submit" value="Send Message" />
-					</div>
-				</div>
-			</form>
+<script>
+  /* ── Lang toggle ── */
+  function toggleLang() {
+    const html = document.documentElement;
+    const isEN = html.dataset.lang === 'en';
+    html.dataset.lang = isEN ? 'ja' : 'en';
+    document.getElementById('langLabel').textContent = isEN ? 'English' : '日本語';
+    document.title = isEN
+      ? 'クラーク・ジェイ・コルテザーノ — ソフトウェアエンジニア'
+      : 'Clark Jay Cortezano — Software Engineer';
+  }
 
-		</div>
-	</section>-->
+  /* ── Theme toggle ── */
+  function toggleTheme() {
+    const html = document.documentElement;
+    const isDark = html.dataset.theme === 'dark';
+    html.dataset.theme = isDark ? 'light' : 'dark';
+    document.getElementById('themeIcon').textContent  = isDark ? '🌙' : '☀️';
+    document.getElementById('themeLabel').textContent = isDark ? 'Dark' : 'Light';
+    localStorage.setItem('cj-theme', html.dataset.theme);
+  }
 
-	</div>
+  /* Restore saved theme */
+  (function() {
+    const saved = localStorage.getItem('cj-theme');
+    if (saved === 'dark') {
+      document.documentElement.dataset.theme = 'dark';
+      document.getElementById('themeIcon').textContent  = '☀️';
+      document.getElementById('themeLabel').textContent = 'Light';
+    }
+  })();
 
-	<!-- Footer -->
-	<!--<div id="footer">-->
-	<!-- Copyright -->
-	<!--<ul class="copyright">
-		<li>&copy; Untitled. All rights reserved.</li>
-		<li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-	</ul>-->
-	<!--</div>-->
-	<!-- Scripts -->
-	<script src="assets/js/jquery.min.js"></script>
-	<script src="assets/js/jquery.scrolly.min.js"></script>
-	<script src="assets/js/jquery.scrollex.min.js"></script>
-	<script src="assets/js/browser.min.js"></script>
-	<script src="assets/js/breakpoints.min.js"></script>
-	<script src="assets/js/util.js"></script>
-	<script src="assets/js/main.js"></script>
+  /* ── Scroll reveal ── */
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
+  /* ── Skill bar animation ── */
+  const barObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.querySelectorAll('.bar-fill').forEach((b, i) =>
+          setTimeout(() => b.classList.add('go'), i * 100)
+        );
+        barObserver.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.2 });
+  document.querySelectorAll('.skills-grid').forEach(el => barObserver.observe(el));
+
+  /* ── Active nav highlight ── */
+  const sections = document.querySelectorAll('section[id]');
+  window.addEventListener('scroll', () => {
+    let cur = '';
+    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 100) cur = s.id; });
+    document.querySelectorAll('.nav-links a').forEach(a => {
+      a.style.color = a.getAttribute('href') === '#' + cur ? 'var(--accent)' : '';
+    });
+  }, { passive: true });
+</script>
 </body>
 </html>
